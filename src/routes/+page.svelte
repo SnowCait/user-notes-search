@@ -330,7 +330,6 @@
 									{#if profile?.name}
 										<div class="mb-1 font-medium text-gray-700">{profile.name}</div>
 									{/if}
-									ID: <code class="rounded bg-gray-100 px-1">{event.id.slice(0, 16)}...</code>
 								</div>
 								<div class="text-xs text-gray-500">
 									{formatDate(event.created_at)}
@@ -344,11 +343,6 @@
 										{part.text}
 									{/if}
 								{/each}
-							</div>
-							<div class="mt-2 flex gap-2 text-xs text-gray-500">
-								<span>作成日時: {formatDate(event.created_at)}</span>
-								<span>•</span>
-								<span>公開鍵: {event.pubkey.slice(0, 16)}...</span>
 							</div>
 						</div>
 					</div>
