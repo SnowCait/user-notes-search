@@ -3,6 +3,7 @@
 	import type { NostrEvent } from 'nostr-fetch';
 	import * as nip19 from 'nostr-tools/nip19';
 	import { insertEventIntoDescendingList } from 'nostr-tools/utils';
+	import { onMount } from 'svelte';
 
 	let publicKey = $state('');
 	let events = $state<NostrEvent[]>([]);
@@ -189,6 +190,19 @@
 	function isValidImageUrl(url: string | undefined): boolean {
 		return typeof url === 'string' && URL.canParse(url) && new URL(url).protocol === 'https:';
 	}
+
+	async function login() {
+		// @ts-ignore
+		const pubkey = (await window.nostr?.getPublicKey()) as string;
+		if (pubkey) {
+			publicKey = pubkey;
+		}
+	}
+
+	onMount(async () => {
+		const { init } = await import('nostr-login');
+		init({ darkMode: false });
+	});
 </script>
 
 <div class="container mx-auto max-w-4xl p-6">
@@ -196,7 +210,10 @@
 
 	<div class="mb-6">
 		<label for="pubkey" class="mb-2 block text-sm font-medium text-gray-700">
-			公開鍵 (pubkey)
+			<span>公開鍵 (pubkey)</span>
+			<button onclick={login} class="rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700">
+				ログイン
+			</button>
 		</label>
 		<div class="flex gap-2">
 			<input
