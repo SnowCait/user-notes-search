@@ -332,7 +332,13 @@
 									{/if}
 								</div>
 								<div class="text-xs text-gray-500">
-									{formatDate(event.created_at)}
+									<a
+										href="https://nostter.app/{nip19.neventEncode({ id: event.id })}"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{formatDate(event.created_at)}
+									</a>
 								</div>
 							</div>
 							<div class="text-sm break-words whitespace-pre-wrap text-gray-700">
