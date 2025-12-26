@@ -13,6 +13,7 @@
 	let loading = $state(false);
 	let error = $state<string | null>(null);
 	let searchQuery = $state('');
+	let controller = new AbortController();
 
 	function getProfile(pubkey: string): { picture?: string; name?: string } | null {
 		const profileEvent = profileEvents.get(pubkey);
@@ -138,7 +139,7 @@
 					kinds: [1]
 				},
 				{},
-				{ limitPerReq: 500 }
+				{ limitPerReq: 500, signal: controller.signal }
 			);
 
 			for await (const event of eventIterator) {
@@ -151,6 +152,11 @@
 			await fetcher.shutdown();
 			loading = false;
 		}
+	}
+
+	function abort() {
+		controller.abort();
+		controller = new AbortController();
 	}
 
 	function formatDate(timestamp: number): string {
@@ -273,6 +279,12 @@
 				{/if}
 				{#if loading}
 					<span class="text-gray-400">（取得中...）</span>
+					<button
+						onclick={abort}
+						class="rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+					>
+						中止
+					</button>
 				{/if}
 			</span>
 		</div>
