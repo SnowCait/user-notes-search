@@ -146,7 +146,7 @@
 				events = insertEventIntoDescendingList(events, event);
 			}
 		} catch (err) {
-			error = err instanceof Error ? err.message : 'イベントの取得中にエラーが発生しました';
+			error = err instanceof Error ? err.message : '投稿の取得中にエラーが発生しました';
 			console.error('Error fetching events:', err);
 		} finally {
 			await fetcher.shutdown();
@@ -212,7 +212,7 @@
 </script>
 
 <div class="container mx-auto max-w-4xl p-6">
-	<h1 class="mb-6 text-3xl font-bold">Nostr イベント検索</h1>
+	<h1 class="mb-6 text-3xl font-bold">Nostr 投稿検索</h1>
 
 	<div class="mb-6">
 		<label for="pubkey" class="mb-2 block text-sm font-medium text-gray-700">
@@ -249,7 +249,7 @@
 	{#if loading && events.length === 0}
 		<div class="py-8 text-center">
 			<div class="inline-block h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
-			<p class="mt-2 text-gray-600">イベントを取得しています...</p>
+			<p class="mt-2 text-gray-600">投稿を取得しています...</p>
 		</div>
 	{/if}
 
@@ -260,7 +260,7 @@
 				type="text"
 				id="search"
 				bind:value={searchQuery}
-				placeholder="イベントの内容で検索..."
+				placeholder="投稿の内容で検索..."
 				class="w-full rounded-md border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			/>
 		</div>
@@ -273,9 +273,9 @@
 			{/if}
 			<span>
 				{#if searchQuery.trim()}
-					{filteredEvents.length} / {events.length} 件のイベントが一致しました
+					{filteredEvents.length} / {events.length} 件の投稿が一致しました
 				{:else}
-					{events.length} 件のイベントが見つかりました
+					{events.length} 件の投稿が見つかりました
 				{/if}
 				{#if loading}
 					<span class="text-gray-400">（取得中...）</span>
@@ -357,10 +357,10 @@
 		</div>
 		{#if searchQuery.trim() && filteredEvents.length === 0}
 			<div class="py-8 text-center text-gray-500">
-				「{searchQuery}」に一致するイベントが見つかりませんでした
+				「{searchQuery}」に一致する投稿が見つかりませんでした
 			</div>
 		{/if}
 	{:else if !beforeLoad && !loading && !error && publicKey}
-		<div class="py-8 text-center text-gray-500">イベントが見つかりませんでした</div>
+		<div class="py-8 text-center text-gray-500">投稿が見つかりませんでした</div>
 	{/if}
 </div>
